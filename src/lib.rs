@@ -341,6 +341,7 @@ impl tower::Service<Vec<treexml::Element>> for Transport {
             };
 
             let query_res = conn.query(req).await;
+            *state = Some(ConnState::Ready(conn));
 
             if let Err(e) = &query_res {
                 *state = Some(ConnState::Error(e.clone()));
